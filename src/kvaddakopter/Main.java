@@ -13,7 +13,7 @@ public class Main extends Application {
 	/**
 	 * Path for base View FXML-file
 	 */
-	private String mainViewPath = "/gui/views/Main.fxml";
+	private String mainViewPath = "/kvaddakopter/gui/views/Main.fxml";
 	
 	
 	/**
