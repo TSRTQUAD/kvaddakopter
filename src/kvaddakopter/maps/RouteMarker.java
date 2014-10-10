@@ -4,6 +4,9 @@ import com.lynden.gmapsfx.javascript.object.LatLong;
 import com.lynden.gmapsfx.javascript.object.Marker;
 import com.lynden.gmapsfx.javascript.object.MarkerOptions;
 
+import java.util.HashMap;
+
+
 /**
  * Created by per on 2014-09-25.
  */
@@ -11,35 +14,53 @@ public class RouteMarker {
 
 
     /**
-     * Factory for creating Rotue markers.
+     * Map with all image paths for the different types of markers
+     */
+    private static HashMap<MapMarkerEnum, String> markerPaths;
+
+
+    static {
+        markerPaths = new HashMap<>();
+        markerPaths.put(MapMarkerEnum.NAVIGATION_START, "point_marker_start.png");
+        markerPaths.put(MapMarkerEnum.NAVIGATION_STOP, "point_marker_end.png");
+        markerPaths.put(MapMarkerEnum.NAVIGATION_NORMAL, "point_marker.png");
+    }
+
+
+    /**
+     * Factory for creating Route markers.
      *
-     * @param coordinate       For the new Marker
-     * @param routeNr          The current nb in coordinate array If looping - Use 1 if you want a start marker (Green) and
-     *                         if routeNb == totalNrOfMarkers  --> marker will be red.
-     *                         otherwise it will be Yellow
-     * @param totalNrOfMarkers The length of the coordinate array.
+     * @param latitude  For the new Marker
+     * @param longitude The current nb in coordinate array If looping - Use 1 if you want a start marker (Green) and
+     * @param iconType  IconType to be showed.
+     * @param title     The title for the marker.
      * @return Marker
      */
-    public static Marker create(double[] coordinate, int routeNr, int totalNrOfMarkers) {
+    public static Marker create(double latitude, double longitude, MapMarkerEnum iconType, String title) {
         MarkerOptions markerOptions = new MarkerOptions();
-        markerOptions.position(new LatLong(coordinate[0], coordinate[1]));
-        markerOptions.title(String.valueOf(routeNr + 1));
-        markerOptions.icon(RouteMarker.figureOutIconType(routeNr+1, totalNrOfMarkers));
+        markerOptions.position(new LatLong(latitude, longitude));
+
+        if (title != null) markerOptions.title(title);
+
+        markerOptions.icon(RouteMarker.figureOutIconPath(iconType));
+
         return new Marker(markerOptions);
+    }
+
+
+    public static Marker create(double latitude, double longitude, MapMarkerEnum iconType) {
+        return RouteMarker.create(latitude, longitude, iconType, null);
     }
 
 
     /**
      * Uses counters to figure out what icon to use for the marker.
      *
-     * @param currentCount
-     * @param totalCount
-     * @return
+     * @param iconType Type of icon to be used
+     * @return The icon image path
      */
-    private static String figureOutIconType(int currentCount, int totalCount) {
-        String type = "gps-marker.png";
-        if (currentCount == 1) type = "gps-marker_start.png";
-        if (currentCount == totalCount) type = "gps-marker_end.png";
-        return type;
+    private static String figureOutIconPath(MapMarkerEnum iconType) {
+
+        return markerPaths.get(iconType);
     }
 }
