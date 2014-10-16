@@ -3,5 +3,11 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/OpenCv"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/CommonCli"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/CommonLang"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/LogBackClassic"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/LogBackCOre"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Sl4j"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Xuggler"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
