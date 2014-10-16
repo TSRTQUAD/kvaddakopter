@@ -23,7 +23,7 @@ public class ImageProcessingUnit {
 		// Initalize Decoder
 		mDecoder = new FFMpegDecoder();
 		//mDecoder.initialize(FFMpegDecoder.STREAM_ADDR_BIPBOP);
-		mDecoder.initialize("rtsp://130.236.226.78:8086");
+		mDecoder.initialize(FFMpegDecoder.STREAM_ADDR_BIPBOP);
 		mDecoder.startStream();
 		
 		//Open Window
