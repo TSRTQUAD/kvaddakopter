@@ -1,22 +1,27 @@
-import java.awt.image.BufferedImage;
-import java.awt.image.DataBufferByte;
-
 import org.opencv.core.Core;
-import org.opencv.core.Mat;
+import programs.TestBackgroundSubtraction;
 
-import com.xuggle.xuggler.demos.VideoImage;
 
-import data_types.ImageObject;
-import decoder.FFMpegDecoder;
-import algorithms.ColorDetection;
-import algorithms.DetectionClass;
 
 
 public class Main {
 	
 	public static void main(String[] args) {
 		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
-		ImageProcessingUnit unit  = new ImageProcessingUnit();
-		unit.run();
+		
+		/*
+		 * Select your program here. The program must be derived 
+		 * from the Program class. The programs
+		 * reside in the src/programs - package.
+		 * 
+		 * Create a new program by subclassing ProgramClass
+		 * and then override the run-function and possibly the init-function. 
+		 * See TestBackgroundSubtraction for an example.
+		 * 
+		 * 
+		 */
+		
+		TestBackgroundSubtraction program  = new TestBackgroundSubtraction();
+		program.run();
 	}
 }

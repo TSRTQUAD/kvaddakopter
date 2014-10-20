@@ -6,6 +6,8 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import org.opencv.core.Mat;
+
 import com.xuggle.xuggler.Global;
 import com.xuggle.xuggler.ICodec;
 import com.xuggle.xuggler.IContainer;
@@ -35,7 +37,7 @@ public class FFMpegDecoder  {
 	/*
 	 * Available adressesess
 	 */
-	public final static String STREAM_ADDR_OLIVER = "rtsp:/10.0.0.9:8087";
+	public final static String STREAM_ADDR_OLIVER = "rtsp://10.0.0.9:8086";
 	public final static String STREAM_ADDR_BIPBOP = "http://devimages.apple.com/iphone/samples/bipbop/bipbopall.m3u8 ";
 
 	//Static source address assigned at initialization 
@@ -60,9 +62,11 @@ public class FFMpegDecoder  {
 	private IVideoResampler mResampler;
 	private int mVideoStreamId;
 
+	//Listener 
+	DecoderListener mDecoderListener;
 	/**
 	 * //Initialize instance passing the address of the video source
-	 * @param sourceAddr eg. "http://devimages.apple.com/iphone/samples/bipbop/bipbopall.m3u8 " or predefined options like FFMpegDecoder.STREAM_ADDR_BIPBOP
+	 * @param sourceAddr A filepath to a movieclip  or  server adress  eg. "http://devimages.apple.com/iphone/samples/bipbop/bipbopall.m3u8 " or predefined options like FFMpegDecoder.STREAM_ADDR_BIPBOP
 	 * 
 	 */
 	public void initialize(String sourceAddr){
@@ -71,6 +75,8 @@ public class FFMpegDecoder  {
 
 		mThread = new DecoderThread();
 
+		
+		
 		// Let's make sure that we can actually convert video pixel formats.
 		if (!IVideoResampler.isSupported(
 				IVideoResampler.Feature.FEATURE_COLORSPACECONVERSION))
@@ -309,16 +315,9 @@ public class FFMpegDecoder  {
 							// And finally, convert the BGR24 to an Java buffered image
 							BufferedImage javaImage = Utils.videoPictureToImage(newPic);
 							mCurrentImage = javaImage;
-							if(writeFirstFrameToFile){
-								File f = new File("LastFile.jpg");
-								try {
-									ImageIO.write(javaImage, "PNG", f);
-								} catch (IOException e) {
-									// TODO Auto-generated catch block
-									e.printStackTrace();
-								}
-								writeFirstFrameToFile =true;
-							}
+							
+							mDecoderListener.onFrameRecieved(javaImage);
+							
 							// and display it on the Java Swing window
 							updateJavaWindow(javaImage);
 						}
@@ -344,9 +343,15 @@ public class FFMpegDecoder  {
 				mContainer.close();
 				mContainer = null;
 			}
+			
+			mDecoderListener.onConnectionLost();
 	
 		}
 
+	}
+	
+	public void setDecoderListener(DecoderListener decoderListener){
+		mDecoderListener = decoderListener;
 	}
 
 }
