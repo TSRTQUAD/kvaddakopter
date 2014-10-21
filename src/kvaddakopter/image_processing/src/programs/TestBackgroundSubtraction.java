@@ -28,9 +28,10 @@ public class TestBackgroundSubtraction extends ProgramClass{
 				
 				mCurrentMethod.start(imageObject);
 				
-				Mat output = mCurrentMethod.getIntermediateResult();
-
-				if(output != null){
+			
+				if(mCurrentMethod.hasIntermediateResult()){
+					
+					Mat output = mCurrentMethod.getIntermediateResult();
 					//Convert Mat to BufferedImage
 					BufferedImage out = ImageConversion.mat2Img(output);
 					updateJavaWindow(out);

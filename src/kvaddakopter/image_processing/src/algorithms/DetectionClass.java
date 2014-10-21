@@ -18,5 +18,9 @@ public class DetectionClass {
 		return mIntermeditateResult;
 	}
 	
+	public boolean hasIntermediateResult(){
+		return mIntermeditateResult != null;
+	}
+	
 
 }

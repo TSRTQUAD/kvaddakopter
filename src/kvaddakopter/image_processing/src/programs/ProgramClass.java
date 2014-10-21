@@ -35,7 +35,7 @@ public class ProgramClass  implements DecoderListener {
 	}
 
 	private void init(){
-		//Create image buffer, which is a list that is holding the most recent
+		//Create image queue, which is a list that is holding the most recent
 		// images
 		mImageQueue = new ArrayList<BufferedImage>();
 
@@ -72,8 +72,6 @@ public class ProgramClass  implements DecoderListener {
 				 ImageObject imageObject = new ImageObject(currentImage);
 				
 				 ArrayList<TargetObjects> = mCurrentMethod.start(imageObject);
-				
-				  
 				 */
 			}
 			try {
@@ -121,7 +119,6 @@ public class ProgramClass  implements DecoderListener {
 	}
 
 	// Decoder Events
-
 	@Override
 	public void onFrameRecieved(BufferedImage image) {
 
