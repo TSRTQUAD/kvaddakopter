@@ -17,7 +17,7 @@ import decoder.FFMpegDecoder;
 public class ProgramClass  implements DecoderListener {
 
 	//Image Queue
-	protected static int ImageQueueSize = 10;
+	protected static int ImageQueueSize = 4;
 	protected  ArrayList<BufferedImage> mImageQueue;
 
 	//Algorithm
@@ -34,7 +34,7 @@ public class ProgramClass  implements DecoderListener {
 		init();
 	}
 
-	private void init(){
+	protected void init(){
 		//Create image queue, which is a list that is holding the most recent
 		// images
 		mImageQueue = new ArrayList<BufferedImage>();

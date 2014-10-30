@@ -21,15 +21,9 @@ public class ImageConversion {
 	 * @return  Output image of Mat type
 	 */
 	public static Mat img2Mat(BufferedImage in){
-		int type = in.getType();
-
+//		int type = in.getType();
 		byte[] pixels = ((DataBufferByte) in.getRaster().getDataBuffer()).getData();
-		for (int i = 0; i < pixels.length; i+=3) {
-			byte temp = pixels[i];
-			pixels[i] = pixels[i+2];
-			pixels[i+2] = temp;
-		}
-		Mat out = new Mat(in.getWidth(),in.getHeight(),CvType.CV_8UC3);
+		Mat out = new Mat(in.getHeight(),in.getWidth(),CvType.CV_8UC3);
 		out.put(0, 0, pixels);
 		return out;
 
@@ -49,17 +43,7 @@ public class ImageConversion {
 		byte[] data = new byte[rows * cols * (int)in.channels()];
 		int type;
 		in.get(0, 0, data);
-		
-		
-		BufferedImage bufImage = null;
-		
-		try {
-			InputStream inStream = new ByteArrayInputStream(data);
-			bufImage = ImageIO.read(inStream);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
+		InputStream inStream = new ByteArrayInputStream(data);
 		
 		if(in.channels() == 1)
 			type = BufferedImage.TYPE_BYTE_GRAY;
@@ -68,10 +52,10 @@ public class ImageConversion {
 		
 
 		BufferedImage out;
-		out = new BufferedImage(rows, cols, type);
-		out.getRaster().setDataElements(0, 0, rows, cols, data);
+		out = new BufferedImage(cols, rows, type);
+		out.getRaster().setDataElements(0, 0, cols, rows, data);
 		
-		return bufImage;
+		return out;
 	} 
 
 }

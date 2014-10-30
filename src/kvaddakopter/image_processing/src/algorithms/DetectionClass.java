@@ -19,7 +19,7 @@ public class DetectionClass {
 	}
 	
 	public boolean hasIntermediateResult(){
-		return mIntermeditateResult != null;
+		return mIntermeditateResult != null && !mIntermeditateResult.empty();
 	}
 	
 
