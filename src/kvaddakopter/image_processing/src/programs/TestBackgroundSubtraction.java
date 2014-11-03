@@ -1,18 +1,7 @@
 package programs;
 
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-
-import javax.imageio.ImageIO;
-
-import org.opencv.core.Core;
 import org.opencv.core.Mat;
-import org.opencv.core.Size;
-import org.opencv.highgui.Highgui;
-import org.opencv.imgproc.Imgproc;
-
 import utils.ImageConversion;
 import algorithms.BackgroundSubtraction;
 import data_types.ImageObject;
@@ -22,13 +11,10 @@ public class TestBackgroundSubtraction extends ProgramClass{
 
 
 	protected void init() {
-		//Create image queue, which is a list that is holding the most recent
-		// images
-		mImageQueue = new ArrayList<BufferedImage>();
 
 		//Create and initialize decoder. And select source.
 		mDecoder = new FFMpegDecoder();
-		mDecoder.initialize("static_cam_moving_obj_feat_britney_noise.mp4");
+		mDecoder.initialize("static_cam_moving_obj_feat_taylor_smooth.mp4");
 
 		// Listen to decoder events
 		mDecoder.setDecoderListener(this);
@@ -39,42 +25,26 @@ public class TestBackgroundSubtraction extends ProgramClass{
 		//Open window 
 		openVideoWindow();
 
+		//Selecting method/algorithm
+		mCurrentMethod = new BackgroundSubtraction();
 
 	}
 	
-	public void run()  {
+	@Override
+	protected void update() {
+		Mat currentImage = getNextFrame();
 
+		ImageObject imageObject = new ImageObject(currentImage);
 
-		mCurrentMethod = new BackgroundSubtraction();
+		mCurrentMethod.start(imageObject);
 
-		while(true){
-
-			if(!isImageQueueEmpty()){
-
-				Mat currentImage = getNextFrame();
-
-				ImageObject imageObject = new ImageObject(currentImage);
-
-				mCurrentMethod.start(imageObject);
-
-
-				if(mCurrentMethod.hasIntermediateResult()){
-
-					Mat output = mCurrentMethod.getIntermediateResult();
-					//Convert Mat to BufferedImage
-					BufferedImage out = ImageConversion.mat2Img(output);
-					output.release();
-					updateJavaWindow(out);
-				}
-			}
-
-			try {
-				Thread.sleep(40);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
+		if(mCurrentMethod.hasIntermediateResult()){
+			Mat output = mCurrentMethod.getIntermediateResult();
+			//Convert Mat to BufferedImage
+			BufferedImage out = ImageConversion.mat2Img(output);
+			output.release();
+			updateJavaWindow(out);
 		}
-		 
 	}
-
+	
 }

@@ -1,4 +1,6 @@
 import org.opencv.core.Core;
+
+import programs.CameraCalibration;
 import programs.TestBackgroundSubtraction;
 
 
@@ -21,7 +23,8 @@ public class Main {
 		 * 
 		 */
 		
-		TestBackgroundSubtraction program  = new TestBackgroundSubtraction();
+//		TestBackgroundSubtraction program  = new TestBackgroundSubtraction();
+		CameraCalibration program  = new CameraCalibration();
 		program.run();
 	}
 }

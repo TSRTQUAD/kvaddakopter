@@ -16,10 +16,7 @@ import org.opencv.core.Size;
 import org.opencv.features2d.DescriptorExtractor;
 import org.opencv.features2d.DescriptorMatcher;
 import org.opencv.features2d.FeatureDetector;
-import org.opencv.features2d.Features2d;
-import org.opencv.highgui.Highgui;
 import org.opencv.imgproc.Imgproc;
-import org.opencv.video.BackgroundSubtractorMOG;
 
 import data_types.ImageObject;
 import data_types.TargetObject;

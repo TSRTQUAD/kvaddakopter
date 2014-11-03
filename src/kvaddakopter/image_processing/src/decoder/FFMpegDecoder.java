@@ -1,13 +1,6 @@
 package decoder;
 
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-
-import javax.imageio.ImageIO;
-
-import org.opencv.core.Mat;
-
 import com.xuggle.xuggler.Global;
 import com.xuggle.xuggler.ICodec;
 import com.xuggle.xuggler.IContainer;
@@ -317,6 +310,13 @@ public class FFMpegDecoder  {
 							mCurrentImage = javaImage;
 							
 							mDecoderListener.onFrameRecieved(javaImage);
+							/*if(mDecoderListener.onFrameRecieved(javaImage))
+								try {
+									Thread.sleep(1);
+								} catch (InterruptedException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}*/
 							
 							// and display it on the Java Swing window
 							updateJavaWindow(javaImage);

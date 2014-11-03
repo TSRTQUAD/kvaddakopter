@@ -11,7 +11,7 @@ public interface DecoderListener {
 	 */
 	
 	//Events
-	public void onFrameRecieved(BufferedImage image);
+	public boolean onFrameRecieved(BufferedImage image);
 	public void onConnectionLost();
 	
 

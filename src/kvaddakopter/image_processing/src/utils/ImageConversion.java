@@ -11,6 +11,7 @@ import javax.imageio.ImageIO;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 import org.opencv.highgui.Highgui;
+import org.opencv.imgproc.Imgproc;
 
 public class ImageConversion {
 
@@ -57,5 +58,15 @@ public class ImageConversion {
 		
 		return out;
 	} 
+	/**
+	 * Converts an image into gray scale.
+	 * @param in Color image
+	 * @return Gray scale image
+	 */
+	public static Mat toGrey(Mat in){
+		Mat grayImg = new Mat(in.size(),in.type()); 
+		Imgproc.cvtColor(in, grayImg, Imgproc.COLOR_RGB2GRAY);
+		return grayImg;
+	}
 
 }

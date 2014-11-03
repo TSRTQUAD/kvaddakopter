@@ -16,9 +16,10 @@ import decoder.FFMpegDecoder;
 
 public class ProgramClass  implements DecoderListener {
 
-	//Image Queue
+	//Create image queue, which is a list that is holding the most recent
+	//images
 	protected static int ImageQueueSize = 4;
-	protected  ArrayList<BufferedImage> mImageQueue;
+	protected  ArrayList<BufferedImage> mImageQueue  = new ArrayList<BufferedImage>();;
 
 	//Algorithm
 	protected DetectionClass mCurrentMethod;
@@ -29,31 +30,62 @@ public class ProgramClass  implements DecoderListener {
 	//Window
 	private static VideoImage mScreen = null;
 
+	//Sleep time / FPS
+	private long mSleepTime = 20;
 
 	public ProgramClass() {
 		init();
 	}
-
+	/** 
+	 *Init function of a program class. This function is called when a Program class instance is created.  <br>
+	 *<br>
+	 *Example how this function can  be implemented in subclasses: <br>
+	 *<code>
+	 *<ul>
+	 *protected void init(){
+	 *<ul>
+	//Create and initialize decoder<br>
+		mDecoder = new FFMpegDecoder();<br>
+		mDecoder.initialize(FFMpegDecoder.STREAM_ADDR_BIPBOP);<br>
+	<br>
+		// Listen to decoder events<br>
+		mDecoder.setDecoderListener(this);<br>
+	<br>
+		//Start stream on a separate thread<br>
+		mDecoder.startStream();<br>
+	<br>
+		//Open window <br>
+		openVideoWindow();<br>
+	 *</ul>
+	 *}
+	 *</ul>
+	 *</code> 
+	 */
 	protected void init(){
-		//Create image queue, which is a list that is holding the most recent
-		// images
-		mImageQueue = new ArrayList<BufferedImage>();
-
-		//Create and initialize decoder
-		mDecoder = new FFMpegDecoder();
-		mDecoder.initialize(FFMpegDecoder.STREAM_ADDR_BIPBOP);
-
-		// Listen to decoder events
-		mDecoder.setDecoderListener(this);
-
-		//Start stream on a separate thread
-		mDecoder.startStream();
-
-		//Open window 
-		openVideoWindow();
-
-
+		System.err.println("ProgramClass: 'init()' not implemented");
+		System.exit(0);
 	}
+
+	/** 
+	 *Update function of a program class. This function is called when there is a fresh new image.  <br>
+	 *<br>
+	 *Example how this function can  be implemented in subclasses: <br>
+	 *<code>
+	 *<ul>
+	 *protected void update(){
+	 *<ul>
+	 *Mat currentImage 		  = getNextFrame(); <br>
+	 *ImageObject imageObject  = new ImageObject(currentImage); <br>
+	 *ArrayList<TargetObjects> = mCurrentMethod.start(imageObject); <br>
+	 *</ul>
+	 *}
+	 *</ul>
+	 *</code> 
+	 */
+	protected  void update(){
+		System.err.println("ProgramClass: 'update()' not implemented");
+		System.exit(0);
+	};
 
 	public void run()  {
 
@@ -63,25 +95,19 @@ public class ProgramClass  implements DecoderListener {
 		//Start program
 		while(true){
 			if(!isImageQueueEmpty()){
-				
-				// Put your algorithm here
-				/*Example:
-				 
-				 Mat currentImage = getNextFrame();
-		
-				 ImageObject imageObject = new ImageObject(currentImage);
-				
-				 ArrayList<TargetObjects> = mCurrentMethod.start(imageObject);
-				 */
+				update();
 			}
 			try {
-				Thread.sleep(17);
+				Thread.sleep(mSleepTime);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
 		}
 	}
 
+	protected void setSleepTime(long t){
+		mSleepTime = t;
+	}
 
 	protected void openVideoWindow(){
 		mScreen = new VideoImage();
@@ -120,7 +146,7 @@ public class ProgramClass  implements DecoderListener {
 
 	// Decoder Events
 	@Override
-	public void onFrameRecieved(BufferedImage image) {
+	public boolean onFrameRecieved(BufferedImage image) {
 
 		synchronized (mImageQueue) {
 			// If buffer is full, remove oldest image to make space 
@@ -129,6 +155,8 @@ public class ProgramClass  implements DecoderListener {
 				mImageQueue.remove(0);
 
 			mImageQueue.add(image);
+
+			return mImageQueue.size() >= ImageQueueSize;
 		}
 	}
 
