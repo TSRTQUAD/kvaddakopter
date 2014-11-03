@@ -128,6 +128,9 @@ public class CameraCalibration extends ProgramClass{
 			List<Mat> tvecs = new ArrayList<Mat>();
 			
 			Calib3d.calibrateCamera(mObjPointsList, mImgPointsList, imgSize, cameraMatrix, distCoeffs, rvecs, tvecs);
+			
+			
+			// TODO: Export camera parameters to file and then
 		}else{
 			return;
 		}

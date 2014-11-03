@@ -20,11 +20,10 @@ public class Main {
 		 * and then override the run-function and possibly the init-function. 
 		 * See TestBackgroundSubtraction for an example.
 		 * 
-		 * 
 		 */
 		
-		TestBackgroundSubtraction program  = new TestBackgroundSubtraction();
-//		CameraCalibration program  = new CameraCalibration();
+//		TestBackgroundSubtraction program  = new TestBackgroundSubtraction();
+		CameraCalibration program  = new CameraCalibration();
 		program.run();
 	}
 }
