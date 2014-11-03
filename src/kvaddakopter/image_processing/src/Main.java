@@ -23,8 +23,8 @@ public class Main {
 		 * 
 		 */
 		
-//		TestBackgroundSubtraction program  = new TestBackgroundSubtraction();
-		CameraCalibration program  = new CameraCalibration();
+		TestBackgroundSubtraction program  = new TestBackgroundSubtraction();
+//		CameraCalibration program  = new CameraCalibration();
 		program.run();
 	}
 }

@@ -76,9 +76,6 @@ public class CameraCalibration extends ProgramClass{
 
 			 */
 		}
-
-		
-	
 	}
 
 	@Override
